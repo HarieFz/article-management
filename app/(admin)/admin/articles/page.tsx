@@ -23,7 +23,7 @@ export default function Articles() {
     category: "",
     title: "",
   });
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const search = useDebounce(queries, 500);
 
@@ -37,7 +37,7 @@ export default function Articles() {
     queryFn: () =>
       ArticlesService.get({
         limit: 10,
-        page: currentPage + 1,
+        page: currentPage,
         category: search[0].category === "default" ? "" : search[0].category,
         title: search[0].title,
       }),
