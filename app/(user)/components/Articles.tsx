@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { ArticlesService } from "@/network/services/articles.service";
@@ -29,6 +29,10 @@ export default function Articles() {
   });
 
   const totalPages = Math.ceil((data?.total ?? 0) / (data?.limit ?? 1));
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search]);
 
   return (
     <section className="max-w-8xl w-full mx-auto">

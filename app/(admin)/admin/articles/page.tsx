@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
@@ -44,6 +44,10 @@ export default function Articles() {
   });
 
   const totalPages = Math.ceil((articles?.total ?? 0) / (articles?.limit ?? 1));
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search]);
 
   return (
     <div>
