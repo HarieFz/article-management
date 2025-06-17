@@ -15,14 +15,14 @@ import SmartPagination from "@/components/SmartPagination";
 export default function Articles() {
   const { values } = useContext(SearchContext);
   const search = useDebounce(values, 500);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const { data, isLoading } = useQuery({
     queryKey: ["articles", currentPage, search],
     queryFn: () =>
       ArticlesService.get({
         limit: 9,
-        page: currentPage,
+        page: currentPage + 1,
         category: search[0].category === "default" ? "" : search[0].category,
         title: search[0].title,
       }),
