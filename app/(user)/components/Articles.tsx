@@ -17,6 +17,17 @@ export default function Articles() {
   const search = useDebounce(values, 500);
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Track search changes to reset pagination
+  const [searchKey, setSearchKey] = useState("");
+
+  useEffect(() => {
+    const newSearchKey = `${search[0]?.category || ""}-${search[0]?.title || ""}`;
+    if (searchKey && searchKey !== newSearchKey) {
+      setCurrentPage(1);
+    }
+    setSearchKey(newSearchKey);
+  }, [search]);
+
   const { data, isLoading } = useQuery({
     queryKey: ["articles", currentPage, search],
     queryFn: () =>
@@ -29,10 +40,6 @@ export default function Articles() {
   });
 
   const totalPages = Math.ceil((data?.total ?? 0) / (data?.limit ?? 1));
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [search]);
 
   return (
     <section className="max-w-8xl w-full mx-auto">
